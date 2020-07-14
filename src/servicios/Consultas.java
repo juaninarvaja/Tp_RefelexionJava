@@ -49,6 +49,7 @@ public class Consultas {
 				i++;
 			}
 			pst.execute();
+			co.Close();
 		}
 		catch( MySQLIntegrityConstraintViolationException e1){
 			System.out.println("Error! Id Duplicado");
@@ -58,10 +59,10 @@ public class Consultas {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally {
+			
+		}
 
-
-		//sacar la ultima coma
-		//contactenarle los ? , ? 
 	}
 
 	public static boolean modificar(Object o){
@@ -92,6 +93,7 @@ public class Consultas {
 			else {
 				nombreId = f.getAnnotation(Columna.class).nombre();
 				valorId = (Integer) UBean.ejecutarGet(o,f.getName());
+				
 			}
 		}
 
@@ -112,6 +114,7 @@ public class Consultas {
 		try {
 			pst = con.prepareCall(consulta+columnas);
 			pst.execute();
+			co.Close();
 		}
 		catch( MySQLIntegrityConstraintViolationException e1){
 			System.out.println("Error! Id Duplicado");
@@ -154,6 +157,7 @@ public class Consultas {
 				System.out.println(consulta);
 				pst = con.prepareCall(consulta);
 				pst.execute();
+				co.Close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -186,8 +190,7 @@ public class Consultas {
 			String from = "FROM `" + nombreTabla + "`";
 			String where = " WHERE ";
 			String nombreID = null;
-			//System.out.println(from);
-			//System.out.println(c.toString());
+
 			for(Field f: atributos) {
 				if(f.getAnnotation(Id.class) == null) {
 					columnas = columnas  + "`";
@@ -229,15 +232,14 @@ public class Consultas {
 						}
 					}
 				}
-				return obj;
 				//System.out.println(obj.toString());
 
 			}
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		co.Close();
 		return obj;
 	}
 

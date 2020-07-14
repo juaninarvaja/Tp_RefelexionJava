@@ -56,7 +56,7 @@ public class Program {
 			System.out.println(m3.toString());
 			}
 			else {
-				System.out.println("error no e maquina xiste con ese id");
+				System.out.println("error no existe maquina con ese id");
 			}
 			break;
 		case 5:
